@@ -44,50 +44,97 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Indexer(children: const [
-        Indexed(
-          index: 10,
-          child: Positioned(
-            child: appBar(),
-          ),
+        body: Indexer(children: [
+      const Indexed(
+        index: 10,
+        child: Positioned(
+          child: appBar(),
         ),
-        Indexed(
+      ),
+      const Indexed(
           index: 100,
           child: Positioned(
+            child: Brands(),
+          ))
+    ]));
   }
 }
 
+class Brands extends StatelessWidget {
+  const Brands({
+    super.key,
+  });
+
+  @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
-      width: 327,
-      color: Colors.amber,
-      child: Column(
-        children: [
-          Stack(
-            children: [Container(
-              height: 80,
-              transform: Matrix4.translationValues(0.0, 160.0, 0.0),
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-              // ignore: prefer_const_constructors
-              child: TextField(
-                    ),
-                  ),
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: 'Filter by title...',
-                  contentPadding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
-                ),
-              ),
-            ),
-        ]),
-        ],
+      child: Container(
+        transform: Matrix4.translationValues(0.0, 160.0, 0.0),
+        width: 327,
+        color: Colors.pink,
+        child: Column(children: const [Input(), Placeholder()]),
       ),
-    ));
+    );
   }
 }
 
-// ignore: camel_case_types
+class Input extends StatelessWidget {
+  const Input({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(children: [
+      Container(
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.0),
+          color: Colors.white,
+        ),
+        child: const TextField(
+          decoration: InputDecoration(
+            hintText: 'Filter by title...',
+            contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
+          ),
+        ),
+      ),
+      Positioned(
+        left: 220.0,
+        top: 30.0,
+        child: SvgPicture.asset(
+          
+          fit: BoxFit.none,
+          'assets/mobile/icon-filter.svg',
+          width: 20.0,
+          height: 20.0,
+          color: Colors.grey,
+        ),
+      ),
+      Positioned(
+        right: 16.0,
+        bottom: 16.0,
+        child: Container(
+          width: 48.0,
+          height: 48.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(6.0),
+            color: const Color(0xFF5964E0),
+          ),
+          child: SvgPicture.asset(
+            alignment: Alignment.center,
+            fit: BoxFit.none,
+            'assets/desktop/icon-search.svg',
+            width: 20,
+            height: 20,
+            color: Colors.white,
+          ),
+        ),
+      ),
+    ]);
+  }
+}
+
 class appBar extends StatelessWidget {
   const appBar({
     super.key,
@@ -96,9 +143,6 @@ class appBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      // Here we take the value from the MyHomePage object that was created by
-      // the App.build method, and use it to set our appbar title.
-
       height: 200,
       child: Stack(children: [
         SizedBox(
