@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:indexed/indexed.dart';
+import 'package:devjobs/app-bar.dart';
+import 'package:devjobs/column.dart';
 
 void main() {
   runApp(const MyApp());
@@ -9,7 +10,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,16 +22,6 @@ class MyApp extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
-
-  // This widget is the home page of your application. It is stateful, meaning
-  // that it has a State object (defined below) that contains fields that affect
-  // how it looks.
-
-  // This class is the configuration for the state. It holds the values (in this
-  // case the title) provided by the parent (in this case the App widget) and
-  // used by the build method of the State. Fields in a Widget subclass are
-  // always marked "final".
-
   final String title;
 
   @override
@@ -44,167 +34,21 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Indexer(children: [
-      const Indexed(
-        index: 10,
-        child: Positioned(
-          child: appBar(),
+      backgroundColor: const Color(0xFFF4F6F8),
+      body: Indexer(children: [
+        Indexed(
+          index: 10,
+          child: Positioned(
+            child: appBar(),
+          ),
         ),
-      ),
-      const Indexed(
+        Indexed(
           index: 100,
           child: Positioned(
             child: Brands(),
-          ))
-    ]));
-  }
-}
-
-class Brands extends StatelessWidget {
-  const Brands({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Container(
-        transform: Matrix4.translationValues(0.0, 160.0, 0.0),
-        width: 327,
-        color: Colors.pink,
-        child: Column(children: const [Input(), Placeholder()]),
-      ),
-    );
-  }
-}
-
-class Input extends StatelessWidget {
-  const Input({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        height: 80,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6.0),
-          color: Colors.white,
-        ),
-        child: const TextField(
-          decoration: InputDecoration(
-            hintText: 'Filter by title...',
-            contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
           ),
-        ),
-      ),
-      Positioned(
-        left: 220.0,
-        top: 30.0,
-        child: SvgPicture.asset(
-          
-          fit: BoxFit.none,
-          'assets/mobile/icon-filter.svg',
-          width: 20.0,
-          height: 20.0,
-          color: Colors.grey,
-        ),
-      ),
-      Positioned(
-        right: 16.0,
-        bottom: 16.0,
-        child: Container(
-          width: 48.0,
-          height: 48.0,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(6.0),
-            color: const Color(0xFF5964E0),
-          ),
-          child: SvgPicture.asset(
-            alignment: Alignment.center,
-            fit: BoxFit.none,
-            'assets/desktop/icon-search.svg',
-            width: 20,
-            height: 20,
-            color: Colors.white,
-          ),
-        ),
-      ),
-    ]);
-  }
-}
-
-class appBar extends StatelessWidget {
-  const appBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      height: 200,
-      child: Stack(children: [
-        SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SvgPicture.asset(
-            'assets/mobile/bg-pattern-header.svg',
-            fit: BoxFit.cover,
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24, top: 96, right: 24, bottom: 72),
-          child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            SvgPicture.asset(
-              'assets/desktop/logo.svg',
-              fit: BoxFit.cover,
-            ),
-            Row(children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: SvgPicture.asset(
-                  'assets/desktop/icon-sun.svg',
-                ),
-              ),
-              const SwitchExample(),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: SvgPicture.asset(
-                  'assets/desktop/icon-moon.svg',
-                ),
-              ),
-            ]),
-          ]),
         ),
       ]),
-    );
-  }
-}
-
-class SwitchExample extends StatefulWidget {
-  const SwitchExample({super.key});
-
-  @override
-  State<SwitchExample> createState() => _SwitchExampleState();
-}
-
-class _SwitchExampleState extends State<SwitchExample> {
-  bool light = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: light,
-      onChanged: (bool value) {
-        setState(() {
-          light = value;
-        });
-      },
-      activeColor: const Color(0xff5964E0),
-      inactiveThumbColor: const Color(0xff5964E0),
-      inactiveTrackColor: Colors.white,
-      activeTrackColor: Colors.white,
     );
   }
 }
