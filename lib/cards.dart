@@ -14,16 +14,35 @@ class Brands extends StatelessWidget {
       child: Container(
         transform: Matrix4.translationValues(0.0, 160.0, 0.0),
         width: 327,
-        child: Column(children: const [Input(), Card()]),
+        child: Column(children: [
+          Input(), 
+          Cards()
+        ]),
       ),
     );
   }
 }
 
+class Cards extends StatelessWidget {
+  dynamic data = getJsonData();
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.builder(
+      itemCount: data.length,
+      itemBuilder: (BuildContext context, int index) {
+        return Card(item: data[index]);
+      },
+    );
+  }
+}
+
 class Card extends StatefulWidget {
+  final Map<String, dynamic> item;
+
   const Card({
     super.key,
-
+    required this.item
   });
 
   @override
@@ -31,7 +50,14 @@ class Card extends StatefulWidget {
 }
 
 class _CardState extends State<Card> {
+  late Map<String, dynamic> _item;
+  
 
+  @override
+  void initState() {
+    super.initState();
+    _item = widget.item;
+  }
   final _styleText = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
@@ -50,7 +76,7 @@ class _CardState extends State<Card> {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           height: 276.0,
           width: double.infinity,
           child: Padding(
@@ -72,7 +98,7 @@ class _CardState extends State<Card> {
                       children: [
                         Row(
                           children: [Text(
-                            data[i].postedAt, 
+                            _item["postedAt"], 
                             style: _styleText,
                           ), 
                           Text(
