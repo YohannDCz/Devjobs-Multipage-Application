@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
-<<<<<<<
 import 'package:indexed/indexed.dart';
-import 'package:devjobs/app-bar.dart';
-import 'package:devjobs/column.dart';
-=======
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:indexed/indexed.dart';
->>>>>>>
+import 'package:devjobs/app_bar.dart';
+import 'package:devjobs/cards.dart';
 
 void main() {
   runApp(const MyApp());
@@ -46,33 +41,6 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Positioned(
             child: appBar(),
           ),
-        ],
-      ),
-    ));
-  }
-}
-
-// ignore: camel_case_types
-class appBar extends StatelessWidget {
-  const appBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      // Here we take the value from the MyHomePage object that was created by
-      // the App.build method, and use it to set our appbar title.
-
-      height: 200,
-      child: Stack(children: [
-        SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SvgPicture.asset(
-            'assets/mobile/bg-pattern-header.svg',
-            fit: BoxFit.cover,
-          ),
         ),
         Indexed(
           index: 100,
@@ -84,35 +52,3 @@ class appBar extends StatelessWidget {
     );
   }
 }
-<<<<<<<
-
-=======
-
-class SwitchExample extends StatefulWidget {
-  const SwitchExample({super.key});
-
-  @override
-  State<SwitchExample> createState() => _SwitchExampleState();
-}
-
-class _SwitchExampleState extends State<SwitchExample> {
-  bool light = true;
-
-  @override
-  Widget build(BuildContext context) {
-    return Switch(
-      value: light,
-      onChanged: (bool value) {
-        setState(() {
-          light = value;
-        });
-      },
-      activeColor: const Color(0xff5964E0),
-      inactiveThumbColor: const Color(0xff5964E0),
-      inactiveTrackColor: Colors.white,
-      activeTrackColor: Colors.white,
-    );
-  }
-}
-
->>>>>>>
