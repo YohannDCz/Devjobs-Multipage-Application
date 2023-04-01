@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.4
   indexed: ^0.0.8
+  skein_color_convert: ^1.0.2
+  color_convert: ^1.0.2
   
 dev_dependencies:
   flutter_test:

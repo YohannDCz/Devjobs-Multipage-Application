@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.0"
+  color_convert:
+    dependency: "direct main"
+    description:
+      name: color_convert
+      sha256: a8914978fd22c238e0fd603863177e7a295ce8d9a76847303b43796d5b1f3070
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -163,6 +171,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  skein_color_convert:
+    dependency: "direct main"
+    description:
+      name: skein_color_convert
+      sha256: "0e2ddfeff1dbffc76910d939f5e6fa1641d6b537980980a4ea5d999bdef260cc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   sky_engine:
     dependency: transitive
     description: flutter
