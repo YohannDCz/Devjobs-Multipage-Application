@@ -23,8 +23,8 @@ class Input extends StatelessWidget {
           ),
         ),
         Positioned(
-          left: 220.0,
           top: 30.0,
+          right: 88.0,
           child: SvgPicture.asset(
             fit: BoxFit.none,
             'assets/mobile/icon-filter.svg',

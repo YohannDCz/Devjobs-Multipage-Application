@@ -10,27 +10,54 @@ class Brands extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Container(
-        transform: Matrix4.translationValues(0.0, 160.0, 0.0),
-        width: 327,
-        height: double.infinity,
-        child: Column(children: [Input(), Card()]),
+      child: FractionallySizedBox(
+        widthFactor: 0.872,
+        child: Container(
+          transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+          child: Column(children: [Input(), Cards()]),
+        ),
       ),
     );
   }
 }
 
-
-class Card extends StatefulWidget {
-
-  const Card({super.key});
+class Cards extends StatefulWidget {
+  const Cards({super.key});
 
   @override
-  State<Card> createState() => _CardState();
+  State<Cards> createState() => _CardsState();
 }
 
-class _CardState extends State<Card> {
+class _CardsState extends State<Cards> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 620;
+  bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1024;
+
+  @override
+  Widget build(BuildContext context) {
+    return GridView.count(crossAxisCount: 5, children: [
+      Card1(),
+      Card1(),
+      Card1(),
+      Card1(),
+      Card1(),
+    ]);
+  }
+}
+
+class Card1 extends StatefulWidget {
+  const Card1({super.key});
+
+  @override
+  State<Card1> createState() => _Card1State();
+}
+
+class _Card1State extends State<Card1> {
+  final Object _item;
   final _styleText = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
@@ -45,13 +72,14 @@ class _CardState extends State<Card> {
     color: Color(0xFF19202D),
   );
 
+  _Card1State(this._item);
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         SizedBox(
           height: 276.0,
-          width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.only(top: 49.0),
             child: Container(

@@ -11,7 +11,7 @@ class appBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 200,
+      height: 136.0,
       child: Stack(children: [
         SizedBox(
           width: double.infinity,
@@ -21,8 +21,10 @@ class appBar extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(left: 24, top: 96, right: 24, bottom: 72),
+        Positioned(
+          top: 32.0,
+          right: 24.0,
+          left: 24.0,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween, 
             children: [
