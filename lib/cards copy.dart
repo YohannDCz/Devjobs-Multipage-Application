@@ -57,7 +57,7 @@ class Card1 extends StatefulWidget {
 }
 
 class _Card1State extends State<Card1> {
-  final Object _item;
+
   final _styleText = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
@@ -72,7 +72,7 @@ class _Card1State extends State<Card1> {
     color: Color(0xFF19202D),
   );
 
-  _Card1State(this._item);
+  _Card1State();
 
   @override
   Widget build(BuildContext context) {
