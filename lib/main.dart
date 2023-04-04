@@ -1,7 +1,9 @@
+import 'package:devjobs/input.dart';
 import 'package:flutter/material.dart';
 import 'package:devjobs/app_bar.dart';
 // import 'package:devjobs/cards.dart';
-import 'cards.dart';
+import 'cards copy.dart';
+import 'input.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: const Color(0xFFF4F6F8),
       body: ListView(children: [
         appBar(),
+        Input(),
         Brands(),
       ]),
     );

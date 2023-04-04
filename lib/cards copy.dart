@@ -7,45 +7,94 @@ class Brands extends StatelessWidget {
     super.key,
   });
 
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: FractionallySizedBox(
-        widthFactor: 0.872,
-        child: Container(
-          transform: Matrix4.translationValues(0.0, -40.0, 0.0),
-          child: Column(children: [Input(), Cards()]),
-        ),
-      ),
-    );
-  }
-}
-
-class Cards extends StatefulWidget {
-  const Cards({super.key});
-
-  @override
-  State<Cards> createState() => _CardsState();
-}
-
-class _CardsState extends State<Cards> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 620;
+  bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 620;
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width <= 1024;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1024;
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(crossAxisCount: 5, children: [
-      Card1(),
-      Card1(),
-      Card1(),
-      Card1(),
-      Card1(),
-    ]);
+    return Container(
+      transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+      child: Column(
+        children: [
+          if (isMobile(context)) 
+            SizedBox(
+              height: 3300.0,
+              child: GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 24),
+                crossAxisCount: 1,
+                mainAxisSpacing: 24.0,
+                childAspectRatio: 2,
+                children: [
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                ],
+              ),
+            )
+          else if (isTablet(context))
+            SizedBox(
+              height: 1718.0,
+              child: GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 40),
+                crossAxisCount: 2,
+                crossAxisSpacing: 11.0,
+                children: [
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                ],
+                ),
+            )
+          else if (isDesktop(context))
+            SizedBox(
+              height: 1132.0,
+              child: GridView.count(
+                physics: NeverScrollableScrollPhysics(),
+                padding: EdgeInsets.symmetric(horizontal: 165.0),
+                crossAxisCount: 3,
+                crossAxisSpacing: 30.0,
+                childAspectRatio: 1.2,
+                children: [
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                  Card1(),
+                ],
+                ),
+            ),
+        
+        ],
+      ),
+    );
   }
 }
 
@@ -57,7 +106,6 @@ class Card1 extends StatefulWidget {
 }
 
 class _Card1State extends State<Card1> {
-
   final _styleText = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
@@ -80,8 +128,9 @@ class _Card1State extends State<Card1> {
       children: [
         SizedBox(
           height: 276.0,
+          width: double.infinity,
           child: Padding(
-            padding: const EdgeInsets.only(top: 49.0),
+            padding: const EdgeInsets.only(top: 50.0),
             child: Container(
               width: 327.0,
               height: 228.0,
@@ -146,7 +195,7 @@ class _Card1State extends State<Card1> {
           ),
         ),
         Positioned(
-          top: 32.0,
+          top: 25.0,
           left: 32.0,
           child: Container(
             width: 50.0,

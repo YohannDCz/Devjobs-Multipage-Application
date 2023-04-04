@@ -7,14 +7,13 @@ class Brands extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: FractionallySizedBox(
         widthFactor: 0.872,
-        child: Container(
-          transform: Matrix4.translationValues(0.0, 160.0, 0.0),
+        child: SizedBox(
           width: 327,
           height: double.infinity,
-          child: Column(children: [Input(), Cards()]),
+          child: Cards(),
         ),
       ),
     );
