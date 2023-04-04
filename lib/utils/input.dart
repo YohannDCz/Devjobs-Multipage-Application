@@ -11,9 +11,9 @@ class Input extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 40),
+        padding: EdgeInsets.symmetric(horizontal: 24),
         child: Container(
-          transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+          // transform: Matrix4.translationValues(0.0, -40.0, 0.0),
           child: Stack(children: [
             Container(
               height: 80,
@@ -21,7 +21,7 @@ class Input extends StatelessWidget {
                 borderRadius: BorderRadius.circular(6.0),
                 color: Colors.white,
               ),
-              child: const TextField(
+              child: TextField(
                 decoration: InputDecoration(hintText: 'Filter by title...', contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0), border: InputBorder.none),
               ),
             ),

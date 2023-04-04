@@ -6,39 +6,39 @@ class Brands extends StatelessWidget {
     super.key,
   });
 
-  bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 620;
-  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width <= 1024;
-  bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1024;
-
+  bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width <= 1220;
+  bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
+  
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
+    final double itemWidth = size.width / 2;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       child: Column(
         children: [
           if (isMobile(context)) 
-            SizedBox(
-              height: 3300.0,
-              child: GridView.count(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                crossAxisCount: 1,
-                mainAxisSpacing: 24.0,
-                childAspectRatio: 2,
-                children: [
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 24),
+              child: SizedBox(
+                height: 3300.0,
+                child: Column(
+                  children: [
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                  ],
+                ),
               ),
             )
           else if (isTablet(context))
@@ -49,6 +49,7 @@ class Brands extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 crossAxisCount: 2,
                 crossAxisSpacing: 11.0,
+                childAspectRatio: (itemWidth / itemHeight),
                 children: [
                   Card1(),
                   Card1(),
@@ -73,7 +74,8 @@ class Brands extends StatelessWidget {
                 padding: EdgeInsets.symmetric(horizontal: 165.0),
                 crossAxisCount: 3,
                 crossAxisSpacing: 30.0,
-                childAspectRatio: 1.2,
+                shrinkWrap: true,
+                childAspectRatio: (itemWidth / ( 1.85 * itemHeight)),
                 children: [
                   Card1(),
                   Card1(),
@@ -119,98 +121,102 @@ class _Card1State extends State<Card1> {
     color: Color(0xFF19202D),
   );
 
+  
   _Card1State();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        SizedBox(
-          height: 276.0,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 50.0),
-            child: Container(
-              width: 327.0,
-              height: 228.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 49.0,
-                    left: 32.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          Text(
-                            "5h ago",
-                            style: _styleText,
+    return SizedBox(
+      height: 276.0,
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 276.0,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Container(
+                width: double.infinity,
+                height: 228.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 50.0,
+                      left: 32.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Text(
+                              "5h ago",
+                              style: _styleText,
+                            ),
+                            Text(
+                              "•",
+                              style: _styleText,
+                            ),
+                            Text(
+                              "Full Time",
+                              style: _styleText,
+                            )
+                          ]),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Text(
+                              "Senior Software Egineer",
+                              style: _styleText2,
+                            ),
                           ),
                           Text(
-                            "•",
+                            "Scoot",
                             style: _styleText,
                           ),
-                          Text(
-                            "Full Time",
-                            style: _styleText,
-                          )
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Text(
-                            "Senior Software Egineer",
-                            style: _styleText2,
-                          ),
-                        ),
-                        Text(
-                          "Scoot",
-                          style: _styleText,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // ignore: prefer_const_constructors
-                  Positioned(
-                    bottom: 36.0,
-                    left: 32.0,
-                    // ignore: prefer_const_constructors
-                    child: Text(
-                      "United Kingdom",
-                      // ignore: prefer_const_constructors
-                      style: TextStyle(
-                        color: const Color(0xFF5964E0), // set the text color
-                        fontSize: 14.0, // set the font size
-                        fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    // ignore: prefer_const_constructors
+                    Positioned(
+                      bottom: 36.0,
+                      left: 32.0,
+                      // ignore: prefer_const_constructors
+                      child: Text(
+                        "United Kingdom",
+                        // ignore: prefer_const_constructors
+                        style: TextStyle(
+                          color: const Color(0xFF5964E0), // set the text color
+                          fontSize: 14.0, // set the font size
+                          fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 25.0,
-          left: 32.0,
-          child: Container(
-            width: 50.0,
-            height: 50.0,
-            decoration: BoxDecoration(
-              color: const Color(0xffE99210),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: SvgPicture.asset(
-              "assets/logos/scoot.svg",
-              width: 40.0,
-              fit: BoxFit.scaleDown,
+          Positioned(
+            top: 25.0,
+            left: 32.0,
+            child: Container(
+              width: 50.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                color: const Color(0xffE99210),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: SvgPicture.asset(
+                "assets/logos/scoot.svg",
+                width: 40.0,
+                fit: BoxFit.scaleDown,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

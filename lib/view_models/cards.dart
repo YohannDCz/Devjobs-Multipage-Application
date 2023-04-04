@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:devjobs/utils/loadjson.dart';
+import 'package:devjobs/utils/json_model.dart';
 
 class Brands extends StatelessWidget {
   const Brands({super.key});
@@ -20,7 +20,6 @@ class Brands extends StatelessWidget {
   }
 }
 
-
 class Cards extends StatefulWidget {
   const Cards({super.key});
 
@@ -29,30 +28,35 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
+  late dynamic _data;
 
   @override
-  void initState() {
+  void initState() async {
     super.initState();
+    _data = await getDataList(); // your async function that returns a String
   }
-
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      itemCount: data.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 1,
-      ),
-      itemBuilder: (BuildContext context, int index) {
-        return Card1(item: data[index]);
-      },
+    return FutureBuilder<List<Data>>(
+      future: _data,
+      builder: (context, index) {
+        GridView.builder(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 1.0,
+          ),
+          itemBuilder: (BuildContext context, int index) {
+            return Card1(item: _data[index]);
+          },
+        );
+      }
     );
   }
 }
 
 class Card1 extends StatefulWidget {
-  final item;
+  final dynamic item;
 
   Card1({required this.item});
 
@@ -61,7 +65,6 @@ class Card1 extends StatefulWidget {
 }
 
 class _Card1State extends State<Card1> {
-  
   final _styleText = const TextStyle(
     fontSize: 16.0,
     fontWeight: FontWeight.normal,
