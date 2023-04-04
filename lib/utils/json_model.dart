@@ -1,0 +1,109 @@
+import 'dart:convert';
+import 'package:flutter/services.dart';
+
+Future<String> jsonString = rootBundle.loadString('assets/data.json');
+final welcome = welcomeFromJson(jsonString);
+
+List<Welcome> welcomeFromJson(String str) => List<Welcome>.from(json.decode(str).map((x) => Welcome.fromJson(x)));
+
+String welcomeToJson(List<Welcome> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Welcome {
+  Welcome({
+    required this.id,
+    required this.company,
+    required this.logo,
+    required this.logoBackground,
+    required this.position,
+    required this.postedAt,
+    required this.contract,
+    required this.location,
+    required this.website,
+    required this.apply,
+    required this.description,
+    required this.requirements,
+    required this.role,
+  });
+
+  int id;
+  String company;
+  String logo;
+  String logoBackground;
+  String position;
+  String postedAt;
+  Contract contract;
+  String location;
+  String website;
+  String apply;
+  String description;
+  Requirements requirements;
+  Requirements role;
+
+  factory Welcome.fromJson(Map<String, dynamic> json) => Welcome(
+        id: json["id"],
+        company: json["company"],
+        logo: json["logo"],
+        logoBackground: json["logoBackground"],
+        position: json["position"],
+        postedAt: json["postedAt"],
+        contract: contractValues.map[json["contract"]]!,
+        location: json["location"],
+        website: json["website"],
+        apply: json["apply"],
+        description: json["description"],
+        requirements: Requirements.fromJson(json["requirements"]),
+        role: Requirements.fromJson(json["role"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "company": company,
+        "logo": logo,
+        "logoBackground": logoBackground,
+        "position": position,
+        "postedAt": postedAt,
+        "contract": contractValues.reverse[contract],
+        "location": location,
+        "website": website,
+        "apply": apply,
+        "description": description,
+        "requirements": requirements.toJson(),
+        "role": role.toJson(),
+      };
+}
+
+enum Contract { FULL_TIME, PART_TIME, FREELANCE }
+
+final contractValues = EnumValues({"Freelance": Contract.FREELANCE, "Full Time": Contract.FULL_TIME, "Part Time": Contract.PART_TIME});
+
+class Requirements {
+  Requirements({
+    required this.content,
+    required this.items,
+  });
+
+  String content;
+  List<String> items;
+
+  factory Requirements.fromJson(Map<String, dynamic> json) => Requirements(
+        content: json["content"],
+        items: List<String>.from(json["items"].map((x) => x)),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "content": content,
+        "items": List<dynamic>.from(items.map((x) => x)),
+      };
+}
+
+class EnumValues<T> {
+  Map<String, T> map;
+  late Map<T, String> reverseMap;
+
+  EnumValues(this.map);
+
+  Map<T, String> get reverse {
+    reverseMap = map.map((k, v) => MapEntry(v, k));
+    return reverseMap;
+  }
+}
