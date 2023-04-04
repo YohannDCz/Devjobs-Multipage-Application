@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:indexed/indexed.dart';
-import 'app_bar.dart';
+import 'package:devjobs/view_models/app_bar.dart';
+
 
 class BusinessPage extends StatefulWidget {
   const BusinessPage({super.key});

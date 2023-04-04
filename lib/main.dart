@@ -1,9 +1,8 @@
-import 'package:devjobs/input.dart';
+import 'package:devjobs/utils/input.dart';
 import 'package:flutter/material.dart';
-import 'package:devjobs/app_bar.dart';
+import 'package:devjobs/view_models/app_bar.dart';
 // import 'package:devjobs/cards.dart';
-import 'cards copy.dart';
-import 'input.dart';
+import 'package:devjobs/view_models/cards copy.dart';
 
 void main() {
   runApp(const MyApp());

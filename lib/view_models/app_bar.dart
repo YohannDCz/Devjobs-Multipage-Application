@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'input.dart';
+import 'package:devjobs/utils/input.dart';
 
 class Appbar extends StatelessWidget {
   const Appbar({super.key});
