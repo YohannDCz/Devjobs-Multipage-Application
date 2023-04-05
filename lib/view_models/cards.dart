@@ -12,7 +12,7 @@ class Brands extends StatelessWidget {
         widthFactor: 0.872,
         child: SizedBox(
           width: 327,
-          height: double.infinity,
+          height: 1000.0,
           child: Cards(),
         ),
       ),
@@ -28,37 +28,57 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  late dynamic _data;
+
+  List<Data> _data = [];
 
   @override
-  void initState() async {
-    super.initState();
-    _data = await getDataList(); // your async function that returns a String
+  void didChangeDependencies() async {
+    super.didChangeDependencies();
+    // Perform asynchronous initialization of the state
+    final data = await fetchData();
+    setState(() {
+      _data = data;
+    });
   }
+
+  // Future<List<String>> fetchData() async {
+  //   // Fetch data asynchronously
+  //   final response = await http.get('https://example.com/data');
+  //   final data = json.decode(response.body);
+  //   return List<String>.from(data['items']);
+  // }
+
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _getDataList(); // call the async function to fetch data
+  // }
+
+  // Future<void> _getDataList() async {
+  //   List<Data> data;
+  //   debugPrint("${data[0].id}");
+  //   setState(() {
+  //     final data = await getDataList();
+  //   });
+  // }
+
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Data>>(
-      future: _data,
-      builder: (context, index) {
-        GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 1.0,
-          ),
-          itemBuilder: (BuildContext context, int index) {
-            return Card1(item: _data[index]);
-          },
-        );
-      }
+    return Column(
+      children: [
+      for (dynamic data1 in _data)
+        Card1(item: data1)
+       ]
     );
-  }
+  } 
 }
 
 class Card1 extends StatefulWidget {
   final dynamic item;
 
   Card1({required this.item});
+
 
   @override
   State<Card1> createState() => _Card1State();

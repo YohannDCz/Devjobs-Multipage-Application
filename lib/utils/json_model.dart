@@ -7,20 +7,20 @@ import 'package:flutter/material.dart';
 //
 //     final data = dataFromJson(jsonString);
 
-Future<List<Data>> getDataList() async {
+Future<List<Data>> fetchData() async {
   Future<String> jsonString = rootBundle.loadString('assets/data.json');
   List<Data> dataList = await jsonString.then((jsonStr) => dataFromJson(jsonStr)); 
   return dataList;
 }
 
-Future<void> printable() async {
-  List<Data> data = await getDataList();
+// Future<void> printable() async {
+//   List<Data> data = await fetchData();
 
-  debugPrint('ID: ${data[0].id}');
-  debugPrint('Company: ${data[0].company}');
-  debugPrint('Logo: ${data[0].logo}');
-  // print other properties as needed
-}
+//   debugPrint('ID: ${data[0].id}');
+//   debugPrint('Company: ${data[0].company}');
+//   debugPrint('Logo: ${data[0].logo}');
+//   // print other properties as needed
+// }
 
 // To parse this JSON data, do
 //
