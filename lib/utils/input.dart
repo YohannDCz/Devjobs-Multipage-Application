@@ -18,18 +18,18 @@ class Input extends StatelessWidget {
         child: Column(
           children: [
             if (isMobile(context))
-              Padding(
+              const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 24),
                 child: ShortInputContent(),
               ),
             if (isTablet(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 40),
                 child: LongInputContent(),
               ),
             if (isDesktop(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 165),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 165),
                 child: LongInputContent(),
               ),
           ],
@@ -54,7 +54,7 @@ class ShortInputContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(6.0),
             color: Colors.white,
           ),
-          child: TextField(
+          child: const TextField(
             decoration: InputDecoration(hintText: 'Filter by title...', contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0), border: InputBorder.none),
           ),
         ),
@@ -66,6 +66,7 @@ class ShortInputContent extends StatelessWidget {
             'assets/mobile/icon-filter.svg',
             width: 20.0,
             height: 20.0,
+            // ignore: deprecated_member_use
             color: Colors.grey,
           ),
         ),
@@ -85,6 +86,7 @@ class ShortInputContent extends StatelessWidget {
               'assets/desktop/icon-search.svg',
               width: 20,
               height: 20,
+              // ignore: deprecated_member_use
               color: Colors.white,
             ),
           ),
@@ -112,7 +114,7 @@ class _LongInputContentState extends State<LongInputContent> {
       Expanded(
         child: Container(
           height: 80,
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(6.0),
               bottomLeft: Radius.circular(6.0),
@@ -124,9 +126,10 @@ class _LongInputContentState extends State<LongInputContent> {
               Positioned(
                 top: 28.0,
                 left: 24.0,
-                child: SvgPicture.asset(fit: BoxFit.contain, 'assets/desktop/icon-search.svg', width: 24.0, height: 24.0, color: Color(0xff5964E0)),
+                // ignore: deprecated_member_use
+                child: SvgPicture.asset(fit: BoxFit.contain, 'assets/desktop/icon-search.svg', width: 24.0, height: 24.0, color: const Color(0xff5964E0)),
               ),
-              TextField(
+              const TextField(
                 decoration: InputDecoration(hintText: 'Filter by title...', contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 64.0), border: InputBorder.none),
               ),
             ],
@@ -134,7 +137,7 @@ class _LongInputContentState extends State<LongInputContent> {
         ),
       ),
       Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             left: BorderSide(width: 2.0, color: Color(0x206E8098)),
             right: BorderSide(width: 2.0, color: Color(0x206E8098)),
@@ -149,9 +152,10 @@ class _LongInputContentState extends State<LongInputContent> {
               Positioned(
                 top: 28.0,
                 left: 24.0,
-                child: SvgPicture.asset(fit: BoxFit.contain, 'assets/desktop/icon-location.svg', width: 24.0, height: 24.0, color: Color(0xff5964E0)),
+                // ignore: deprecated_member_use
+                child: SvgPicture.asset(fit: BoxFit.contain, 'assets/desktop/icon-location.svg', width: 24.0, height: 24.0, color: const Color(0xff5964E0)),
               ),
-              TextField(
+              const TextField(
                 decoration: InputDecoration(hintText: 'Filter by location...', contentPadding: EdgeInsets.only(left: 57.0, top: 32.0, right: 20.0), border: InputBorder.none),
               ),
             ])),
@@ -159,7 +163,7 @@ class _LongInputContentState extends State<LongInputContent> {
       Container(
         width: 254.0,
         height: 80.0,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
             topRight: Radius.circular(6.0),
@@ -183,8 +187,8 @@ class _LongInputContentState extends State<LongInputContent> {
                       });
                     },
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
                     child: Text(
                       'Full Time',
                       style: TextStyle(
@@ -203,7 +207,7 @@ class _LongInputContentState extends State<LongInputContent> {
                   borderRadius: BorderRadius.circular(6.0),
                   color: const Color(0xFF5964E0),
                 ),
-                child: Center(
+                child: const Center(
                   child: Text(
                     "Search",
                     style: TextStyle(

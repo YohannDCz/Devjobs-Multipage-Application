@@ -19,49 +19,88 @@ class appBar extends StatelessWidget {
     super.key,
   });
 
+  bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
+  bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
+
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 136.0,
-      child: Stack(children: [
-        SizedBox(
-          width: double.infinity,
-          height: double.infinity,
-          child: SvgPicture.asset(
-            'assets/mobile/bg-pattern-header.svg',
-            fit: BoxFit.cover,
-          ),
-        ),
-        Positioned(
-          top: 32.0,
-          right: 24.0,
-          left: 24.0,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween, 
-            children: [
-            SvgPicture.asset(
-              'assets/desktop/logo.svg',
-              fit: BoxFit.cover,
+    return Column(
+      children: [
+        if (isMobile(context))
+        Container(
+          height: 136.0,
+          child: Stack(children: [
+            SizedBox(
+              width: double.infinity,
+              height: double.infinity,
+              child: SvgPicture.asset(
+                'assets/mobile/bg-pattern-header.svg',
+                fit: BoxFit.cover,
+              ),
             ),
-            Row(children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: SvgPicture.asset(
-                  'assets/desktop/icon-sun.svg',
-                ),
-              ),
-              const SwitchButton(),
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0),
-                child: SvgPicture.asset(
-                  'assets/desktop/icon-moon.svg',
-                ),
-              ),
-            ]),
+            Container(
+              padding: EdgeInsets.only(top: 32.0, right: 24.0, left: 24.0),
+              child: LogoSwitch(),
+            ),
           ]),
         ),
-      ]),
+          if (isDesktop(context) || isTablet(context))
+          Container(
+            height: 160.0,
+            child: Stack(children: [
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
+                  child: SvgPicture.asset(
+                      'assets/mobile/bg-pattern-header.svg',
+                      fit: BoxFit.fitWidth,
+                    ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 32.0, right: 165.0, left: 165.0),
+                child: LogoSwitch(),
+              ),
+            ]),
+          ),
+      ],
     );
+  }
+}
+
+class LogoSwitch extends StatelessWidget {
+  const LogoSwitch({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween, 
+      children: [
+      SvgPicture.asset(
+        'assets/desktop/logo.svg',
+        fit: BoxFit.cover,
+      ),
+      Row(children: [
+        Padding(
+          padding: const EdgeInsets.only(right: 16.0),
+          child: SvgPicture.asset(
+            'assets/desktop/icon-moon.svg',
+          ),
+        ),
+        const SwitchButton(),
+        Padding(
+          padding: const EdgeInsets.only(left: 16.0),
+          child: SvgPicture.asset(
+            'assets/desktop/icon-sun.svg',
+          ),
+        ),
+      ]),
+    ]);
   }
 }
 

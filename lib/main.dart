@@ -1,7 +1,7 @@
 import 'package:devjobs/utils/input.dart';
 import 'package:flutter/material.dart';
 import 'package:devjobs/view_models/app_bar.dart';
-import 'package:devjobs/view_models/cards.dart';
+// import 'package:devjobs/view_models/cards.dart';
 import 'package:devjobs/view_models/cards copy.dart';
 // import 'package:devjobs/utils/json_model.dart';
 // import 'package:devjobs/utils/loadjson.dart';

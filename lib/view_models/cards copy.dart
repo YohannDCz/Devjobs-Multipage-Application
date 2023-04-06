@@ -7,9 +7,9 @@ class Brands extends StatelessWidget {
   });
 
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
-  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width <= 1220;
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
-  
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -19,11 +19,10 @@ class Brands extends StatelessWidget {
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
       child: Column(
         children: [
-          if (isMobile(context)) 
+          if (isMobile(context))
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 24),
               child: SizedBox(
-                height: 3300.0,
                 child: Column(
                   children: [
                     Card1(),
@@ -43,12 +42,12 @@ class Brands extends StatelessWidget {
             )
           else if (isTablet(context))
             SizedBox(
-              height: 1718.0,
               child: GridView.count(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 40),
                 crossAxisCount: 2,
                 crossAxisSpacing: 11.0,
+                shrinkWrap: true,
                 childAspectRatio: (itemWidth / itemHeight),
                 children: [
                   Card1(),
@@ -64,18 +63,17 @@ class Brands extends StatelessWidget {
                   Card1(),
                   Card1(),
                 ],
-                ),
+              ),
             )
           else if (isDesktop(context))
             SizedBox(
-              height: 1132.0,
               child: GridView.count(
                 physics: NeverScrollableScrollPhysics(),
                 padding: EdgeInsets.symmetric(horizontal: 165.0),
                 crossAxisCount: 3,
                 crossAxisSpacing: 30.0,
                 shrinkWrap: true,
-                childAspectRatio: (itemWidth / ( 1.85 * itemHeight)),
+                childAspectRatio: (itemWidth / (1.85 * itemHeight)),
                 children: [
                   Card1(),
                   Card1(),
@@ -90,9 +88,8 @@ class Brands extends StatelessWidget {
                   Card1(),
                   Card1(),
                 ],
-                ),
+              ),
             ),
-        
         ],
       ),
     );
@@ -121,7 +118,6 @@ class _Card1State extends State<Card1> {
     color: Color(0xFF19202D),
   );
 
-  
   _Card1State();
 
   @override
