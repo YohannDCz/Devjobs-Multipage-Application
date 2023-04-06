@@ -108,6 +108,10 @@ class LongInputContent extends StatefulWidget {
 class _LongInputContentState extends State<LongInputContent> {
   bool _isChecked1 = false;
 
+  bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
+  bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
+  bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
+
   @override
   Widget build(BuildContext context) {
     return Row(children: [
@@ -145,7 +149,7 @@ class _LongInputContentState extends State<LongInputContent> {
           color: Colors.white,
         ),
         child: Container(
-            width: 214.0,
+            width: isTablet(context) ? 214.0 : 300.0,
             height: 80.0,
             color: Colors.white,
             child: Stack(children: [
@@ -161,7 +165,7 @@ class _LongInputContentState extends State<LongInputContent> {
             ])),
       ),
       Container(
-        width: 254.0,
+        width: isTablet(context) ? 254.0 : 345.0,
         height: 80.0,
         decoration: const BoxDecoration(
           color: Colors.white,
@@ -187,10 +191,10 @@ class _LongInputContentState extends State<LongInputContent> {
                       });
                     },
                   ),
-                  const Padding(
+                  Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Text(
-                      'Full Time',
+                      isTablet(context) ?  "Full Time" : "Full Time Only",
                       style: TextStyle(
                         fontSize: 16.0,
                         fontFamily: "Kumbh Sans",
@@ -201,23 +205,21 @@ class _LongInputContentState extends State<LongInputContent> {
                 ],
               ),
               Container(
-                width: 80.0,
-                height: 48.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(6.0),
-                  color: const Color(0xFF5964E0),
-                ),
-                child: const Center(
-                  child: Text(
-                    "Search",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: "Kumbh Sans",
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.bold,
-                    )),
-                )
-              ),
+                  width: 80.0,
+                  height: 48.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(6.0),
+                    color: const Color(0xFF5964E0),
+                  ),
+                  child: const Center(
+                    child: Text("Search",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontFamily: "Kumbh Sans",
+                          fontSize: 16.0,
+                          fontWeight: FontWeight.bold,
+                        )),
+                  )),
             ],
           ),
         ),

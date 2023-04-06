@@ -65,14 +65,20 @@ class _CardsState extends State<Cards> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-      for (dynamic data1 in _data)
-        Card1(item: data1)
-       ]
-    );
-  } 
+    return GridView.builder(
+      itemCount: _data.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
+      ),
+      itemBuilder: (context, index) {
+        Card1(item: _data[index]);
+    } 
+    );  
+  }
 }
+
 
 class Card1 extends StatefulWidget {
   final dynamic item;

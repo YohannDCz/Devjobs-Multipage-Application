@@ -17,11 +17,12 @@ class Brands extends StatelessWidget {
     final double itemWidth = size.width / 2;
     return Container(
       transform: Matrix4.translationValues(0.0, -40.0, 0.0),
+      padding: isDesktop(context)? EdgeInsets.only(bottom: 64.0): EdgeInsets.only(bottom: 32.0),
       child: Column(
         children: [
           if (isMobile(context))
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 24),
+              padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 32.0),
               child: SizedBox(
                 child: Column(
                   children: [
@@ -41,55 +42,80 @@ class Brands extends StatelessWidget {
               ),
             )
           else if (isTablet(context))
-            SizedBox(
-              child: GridView.count(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                crossAxisCount: 2,
-                crossAxisSpacing: 11.0,
-                shrinkWrap: true,
-                childAspectRatio: (itemWidth / itemHeight),
-                children: [
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 56.0),
+              child: SizedBox(
+                child: GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 40),
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 11.0,
+                  shrinkWrap: true,
+                  childAspectRatio: (itemWidth / itemHeight),
+                  children: [
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                  ],
+                ),
               ),
             )
           else if (isDesktop(context))
-            SizedBox(
-              child: GridView.count(
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: 165.0),
-                crossAxisCount: 3,
-                crossAxisSpacing: 30.0,
-                shrinkWrap: true,
-                childAspectRatio: (itemWidth / (1.85 * itemHeight)),
-                children: [
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                  Card1(),
-                ],
+            Padding(
+              padding: const EdgeInsets.only(bottom: 56.0),
+              child: SizedBox(
+                child: GridView.count(
+                  physics: NeverScrollableScrollPhysics(),
+                  padding: EdgeInsets.symmetric(horizontal: 165.0),
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 30.0,
+                  shrinkWrap: true,
+                  childAspectRatio: (itemWidth / (1.85 * itemHeight)),
+                  children: [
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                    Card1(),
+                  ],
+                ),
               ),
             ),
+          Container(
+            width: 142.0,
+            height: 48.0,
+            child: ElevatedButton(onPressed: () => {}, 
+              style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(Color(0xFF5964E0)),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                    ),
+                  ),
+            child: Text("Load More", style: TextStyle(
+              fontFamily: "Kumbh Sans",
+              fontWeight: FontWeight.bold,
+              fontSize: 16.0,
+              color: Colors.white,
+            ),)),
+          )
         ],
       ),
     );
@@ -97,7 +123,9 @@ class Brands extends StatelessWidget {
 }
 
 class Card1 extends StatefulWidget {
-  const Card1({super.key});
+  // final dynamic item;
+
+  // Card1({required this.item});
 
   @override
   State<Card1> createState() => _Card1State();
@@ -133,7 +161,6 @@ class _Card1State extends State<Card1> {
               padding: const EdgeInsets.only(top: 50.0),
               child: Container(
                 width: double.infinity,
-                height: 228.0,
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(6.0),
@@ -151,9 +178,12 @@ class _Card1State extends State<Card1> {
                               "5h ago",
                               style: _styleText,
                             ),
-                            Text(
-                              "•",
-                              style: _styleText,
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 2.0),
+                              child: Text(
+                                "•",
+                                style: _styleText,
+                              ),
                             ),
                             Text(
                               "Full Time",
@@ -161,7 +191,7 @@ class _Card1State extends State<Card1> {
                             )
                           ]),
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            padding: const EdgeInsets.symmetric(vertical: 4.0),
                             child: Text(
                               "Senior Software Egineer",
                               style: _styleText2,
@@ -171,23 +201,21 @@ class _Card1State extends State<Card1> {
                             "Scoot",
                             style: _styleText,
                           ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 28.0),
+                            child: Text(
+                              "United Kingdom",
+                              // ignore: prefer_const_constructors
+                              style: TextStyle(
+                                color: const Color(0xFF5964E0), // set the text color
+                                fontSize: 14.0, // set the font size
+                                fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
+                              ),
+                            ),
+                          ),
                         ],
                       ),
-                    ),
                     // ignore: prefer_const_constructors
-                    Positioned(
-                      bottom: 36.0,
-                      left: 32.0,
-                      // ignore: prefer_const_constructors
-                      child: Text(
-                        "United Kingdom",
-                        // ignore: prefer_const_constructors
-                        style: TextStyle(
-                          color: const Color(0xFF5964E0), // set the text color
-                          fontSize: 14.0, // set the font size
-                          fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
-                        ),
-                      ),
                     )
                   ],
                 ),

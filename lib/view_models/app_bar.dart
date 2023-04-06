@@ -28,24 +28,45 @@ class appBar extends StatelessWidget {
     return Column(
       children: [
         if (isMobile(context))
-        Container(
-          height: 136.0,
-          child: Stack(children: [
-            SizedBox(
-              width: double.infinity,
-              height: double.infinity,
-              child: SvgPicture.asset(
-                'assets/mobile/bg-pattern-header.svg',
-                fit: BoxFit.cover,
+          Container(
+            height: 136.0,
+            child: Stack(children: [
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: SvgPicture.asset(
+                  'assets/mobile/bg-pattern-header.svg',
+                  fit: BoxFit.cover,
+                ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 32.0, right: 24.0, left: 24.0),
-              child: LogoSwitch(),
-            ),
-          ]),
-        ),
-          if (isDesktop(context) || isTablet(context))
+              Container(
+                padding: EdgeInsets.only(top: 32.0, right: 24.0, left: 24.0),
+                child: LogoSwitch(),
+              ),
+            ]),
+          ),
+        if (isTablet(context))
+          Container(
+            height: 160.0,
+            child: Stack(children: [
+              SizedBox(
+                width: double.infinity,
+                height: double.infinity,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
+                  child: SvgPicture.asset(
+                    'assets/mobile/bg-pattern-header.svg',
+                    fit: BoxFit.fitWidth,
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 32.0, right: 40.0, left: 40.0),
+                child: LogoSwitch(),
+              ),
+            ]),
+          ),
+        if (isDesktop(context))
           Container(
             height: 160.0,
             child: Stack(children: [
