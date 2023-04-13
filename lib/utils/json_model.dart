@@ -13,14 +13,14 @@ Future<List<Data>> fetchData() async {
   return dataList;
 }
 
-// Future<void> printable() async {
-//   List<Data> data = await fetchData();
+Future<void> printable() async {
+  List<Data> data = await fetchData();
 
-//   debugPrint('ID: ${data[0].id}');
-//   debugPrint('Company: ${data[0].company}');
-//   debugPrint('Logo: ${data[0].logo}');
-//   // print other properties as needed
-// }
+  debugPrint('ID: ${data[0].id}');
+  debugPrint('Company: ${data[0].company}');
+  debugPrint('Logo: ${data[0].logo}');
+  // print other properties as needed
+}
 
 // To parse this JSON data, do
 //

@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:devjobs/utils/json_model.dart';
 
 class Brands extends StatelessWidget {
-  const Brands({
+  Brands({
     super.key,
   });
 
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
   bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
+  final List<String> _data = ["Chuck Norris", "John Doe", "Miley Cyrus"];
 
   @override
   Widget build(BuildContext context) {
+
     var size = MediaQuery.of(context).size;
     final double itemHeight = (size.height - kToolbarHeight - 24) / 2;
     final double itemWidth = size.width / 2;
@@ -23,23 +26,13 @@ class Brands extends StatelessWidget {
           if (isMobile(context))
             Padding(
               padding: EdgeInsets.only(left: 24.0, right: 24.0, bottom: 32.0),
-              child: SizedBox(
-                child: Column(
-                  children: [
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                    Card1(),
-                  ],
-                ),
-              ),
+              child: GridView.count(
+                crossAxisCount: 2,
+                childAspectRatio: 2,
+                padding: const EdgeInsets.all(8),
+                children: [
+                ]
+              )
             )
           else if (isTablet(context))
             Padding(
