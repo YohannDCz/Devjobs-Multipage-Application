@@ -1,3 +1,4 @@
+import 'package:devjobs/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:devjobs/utils/input.dart';
@@ -7,7 +8,7 @@ class Appbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
+    return Column(children: const [
       appBar(),
       Input(),
     ]);
@@ -28,32 +29,40 @@ class appBar extends StatelessWidget {
     return Column(
       children: [
         if (isMobile(context))
-          Container(
+          SizedBox(
             height: 136.0,
             child: Stack(children: [
               SizedBox(
                 width: double.infinity,
                 height: double.infinity,
-                child: SvgPicture.asset(
-                  'assets/mobile/bg-pattern-header.svg',
-                  fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () => {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MyHomePage()),
+                    )
+                  },
+                  child: SvgPicture.asset(
+                    'assets/mobile/bg-pattern-header.svg',
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 32.0, right: 24.0, left: 24.0),
-                child: LogoSwitch(),
+                padding: const EdgeInsets.only(top: 32.0, right: 24.0, left: 24.0),
+                child: const LogoSwitch(),
               ),
             ]),
           ),
         if (isTablet(context))
-          Container(
+          SizedBox(
             height: 160.0,
             child: Stack(children: [
               SizedBox(
                 width: double.infinity,
                 height: double.infinity,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
                   child: SvgPicture.asset(
                     'assets/mobile/bg-pattern-header.svg',
                     fit: BoxFit.fitWidth,
@@ -61,20 +70,20 @@ class appBar extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 32.0, right: 40.0, left: 40.0),
-                child: LogoSwitch(),
+                padding: const EdgeInsets.only(top: 32.0, right: 40.0, left: 40.0),
+                child: const LogoSwitch(),
               ),
             ]),
           ),
         if (isDesktop(context))
-          Container(
+          SizedBox(
             height: 160.0,
             child: Stack(children: [
               SizedBox(
                 width: double.infinity,
                 height: double.infinity,
                 child: ClipRRect(
-                  borderRadius: BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
+                  borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
                   child: SvgPicture.asset(
                       'assets/mobile/bg-pattern-header.svg',
                       fit: BoxFit.fitWidth,
@@ -82,8 +91,8 @@ class appBar extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 32.0, right: 165.0, left: 165.0),
-                child: LogoSwitch(),
+                padding: const EdgeInsets.only(top: 32.0, right: 165.0, left: 165.0),
+                child: const LogoSwitch(),
               ),
             ]),
           ),

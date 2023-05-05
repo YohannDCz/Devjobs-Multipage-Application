@@ -8,8 +8,8 @@ import 'package:flutter/material.dart';
 //     final data = dataFromJson(jsonString);
 
 Future<List<Data>> fetchData() async {
-  Future<String> jsonString = rootBundle.loadString('assets/data.json');
-  List<Data> dataList = await jsonString.then((jsonStr) => dataFromJson(jsonStr)); 
+  String jsonString = await rootBundle.loadString('assets/data.json');
+  List<Data> dataList = dataFromJson(jsonString); 
   return dataList;
 }
 
@@ -28,7 +28,7 @@ Future<void> printable() async {
 
 List<Data> dataFromJson(String str) => List<Data>.from(json.decode(str).map((x) => Data.fromJson(x)));
 
-String dataToJson(List<Data> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String dataToJson(List<Data> data) => json.encode(data.map((x) => x.toJson()));
 
 class Data {
     Data({
