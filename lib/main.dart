@@ -1,4 +1,5 @@
 import 'package:devjobs/utils/input.dart';
+// import 'package:devjobs/widgets/business.dart';
 import 'package:flutter/material.dart';
 import 'package:devjobs/view_models/app_bar.dart';
 // import 'package:devjobs/view_models/cards_copy.dart';
@@ -37,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF4F6F8),
-      body: ListView(children: [
+      body: ListView(children: const [
         appBar(),
         Input(),
         Brands(),

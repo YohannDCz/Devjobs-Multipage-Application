@@ -12,7 +12,6 @@ class Brands extends StatelessWidget {
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
   bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
-  final List<String> _data = ["Chuck Norris", "John Doe", "Miley Cyrus"];
 
   @override
   Widget build(BuildContext context) {
