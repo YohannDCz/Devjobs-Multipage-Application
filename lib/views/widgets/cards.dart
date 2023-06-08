@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:devjobs/utils/json_model.dart';
+import 'package:devjobs/model/json_model.dart';
 
 class Brands extends StatelessWidget {
   const Brands({super.key});
@@ -35,9 +35,9 @@ class _CardsState extends State<Cards> {
 //   }
   bool open = false;
 
-  void openContainer() {
-    setState(open = !open);
-  }
+  // void openContainer() {
+  //   setState(open = !open);
+  // }
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
   bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
@@ -103,7 +103,7 @@ class _CardsState extends State<Cards> {
               width: 142.0,
               height: 48.0,
               child: ElevatedButton(
-                  onPressed: () => {openContainer},
+                  onPressed: () => {},
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5964E0)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
