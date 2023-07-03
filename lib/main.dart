@@ -3,8 +3,14 @@ import 'package:devjobs/views/widgets/business.dart';
 import 'package:flutter/material.dart';
 import 'package:devjobs/views/components/app_bar.dart';
 import 'package:devjobs/views/widgets/cards.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

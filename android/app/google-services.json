@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "291738544922",
+    "project_id": "designo-5706d",
+    "storage_bucket": "designo-5706d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291738544922:android:f95263ceb03bb3031a1aa3",
+        "android_client_info": {
+          "package_name": "com.example.devjobs"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291738544922-bulrf7sg3gl6d6mhr5tdpectrnl8ci0e.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJ_cdX0mTF51lDb9YFRwtYxwOSq0NgUlY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291738544922-bulrf7sg3gl6d6mhr5tdpectrnl8ci0e.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
