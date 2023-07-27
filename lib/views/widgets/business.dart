@@ -3,25 +3,13 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:devjobs/views/components/app_bar.dart';
-
-class Business {
-  String id;
-  String? company, logo, logoBackground, position, postedAt, contract, location, website, apply, description;
-  Map<String, String>? requirements, role;
-
-
-  Business(this.id, {this.company, this.logo, this.logoBackground, this.position, this.postedAt, this.contract, this.location, this.website, this.apply, this.description, this.requirements, this.role });
-
-  factory Business.fromJson(Map<String, dynamic> parsedJson) {
-    return Business("scoot");
-  }
-}
-
+import '../../model/json_model.dart';
 
 class BusinessPage extends StatefulWidget {
-  final String id;
- const BusinessPage(this.id, {super.key});
+  final String? id;
+  const BusinessPage({super.key, this.id});
 
   @override
   State<BusinessPage> createState() => _BusinessPageState();
@@ -34,27 +22,27 @@ class _BusinessPageState extends State<BusinessPage> {
   _BusinessPageState() {
     // TODO: en fonction de l'id qui est dans la Page => récupérer le bon json
     // Future
-    fetchDataById(widget.id).then((data) => {
-      setState(() {
-        myBusiness = data;
-      })
-    });
+    fetchDataById(widget.id!).then((data) => {
+          setState(() {
+            myBusiness = data;
+          })
+        });
   }
 
   Future<Business?> fetchDataById(String id) async {
     try {
       // Charger le fichier JSON depuis les actifs
       String jsonString = await rootBundle.loadString('assets/data.json');
-      
+
       // Convertir la chaîne JSON en une liste de map
       List<dynamic> jsonList = json.decode(jsonString);
-      
+
       // Rechercher l'élément correspondant à l'ID donné
       Map<String, dynamic>? jsonData = jsonList.firstWhere(
         (element) => element['id'] == id,
         orElse: () => null,
       );
-      
+
       if (jsonData != null) {
         // Créer une instance de Business à partir des données JSON
         Business data = Business.fromJson(jsonData);
@@ -82,7 +70,6 @@ class _BusinessPageState extends State<BusinessPage> {
 
 class Businesses extends StatelessWidget {
   final Business myBusiness;
-
 
   const Businesses(this.myBusiness, {super.key});
 

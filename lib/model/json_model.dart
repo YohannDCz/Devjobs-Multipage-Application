@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 //
 //     final data = dataFromJson(jsonString);
 
-Future<List<Data>> fetchData() async {
+Future<List<Business>> fetchData() async {
   String jsonString = await rootBundle.loadString('assets/data.json');
-  List<Data> dataList = dataFromJson(jsonString); 
+  List<Business> dataList = dataFromJson(jsonString); 
   return dataList;
 }
 
 Future<void> printable() async {
-  List<Data> data = await fetchData();
+  List<Business> data = await fetchData();
 
   debugPrint('ID: ${data[0].id}');
   debugPrint('Company: ${data[0].company}');
@@ -26,12 +26,12 @@ Future<void> printable() async {
 //
 //     final data = dataFromJson(jsonString);
 
-List<Data> dataFromJson(String str) => List<Data>.from(json.decode(str).map((x) => Data.fromJson(x)));
+List<Business> dataFromJson(String str) => List<Business>.from(json.decode(str).map((x) => Business.fromJson(x)));
 
-String dataToJson(List<Data> data) => json.encode(data.map((x) => x.toJson()));
+String dataToJson(List<Business> data) => json.encode(data.map((x) => x.toJson()));
 
-class Data {
-    Data({
+class Business {
+    Business({
         required this.id,
         required this.company,
         required this.logo,
@@ -61,7 +61,7 @@ class Data {
     Requirements requirements;
     Requirements role;
 
-    factory Data.fromJson(Map<String, dynamic> json) => Data(
+    factory Business.fromJson(Map<String, dynamic> json) => Business(
         id: json["id"],
         company: json["company"],
         logo: json["logo"],

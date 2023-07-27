@@ -3,14 +3,8 @@ import 'package:devjobs/views/widgets/business.dart';
 import 'package:flutter/material.dart';
 import 'package:devjobs/views/components/app_bar.dart';
 import 'package:devjobs/views/widgets/cards.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
   runApp(const MyApp());
 }
 
@@ -22,7 +16,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Devjobs',
       theme: ThemeData(useMaterial3: true, colorSchemeSeed: const Color(0xff5964E0), brightness: Brightness.light),
-      home: const BusinessPage("scoot"),
+      home: const MyHomePage(),
     );
   }
 }

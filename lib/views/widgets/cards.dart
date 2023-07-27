@@ -7,10 +7,10 @@ class Brands extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: SizedBox(
         height: null,
-        child: Wrap(children: const [Cards()]),
+        child: Wrap(children: [Cards()]),
       ),
     );
   }
@@ -24,15 +24,6 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  //   @override
-//   void didChangeDependencies() async {
-//     super.didChangeDependencies();
-//     // Perform asynchronous initialization of the state
-//     final data = await fetchData();
-//     setState(() {
-//       _data = data;
-//     });
-//   }
   bool open = false;
 
   // void openContainer() {
@@ -52,7 +43,7 @@ class _CardsState extends State<Cards> {
       future: fetchData(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final data = snapshot.data as List<Data>;
+          final data = snapshot.data as List<Business>;
           return Column(children: [
             if (isMobile(context))
               Padding(
