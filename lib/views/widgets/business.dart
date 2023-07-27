@@ -8,8 +8,8 @@ import 'package:devjobs/views/components/app_bar.dart';
 import '../../model/json_model.dart';
 
 class BusinessPage extends StatefulWidget {
-  final String? id;
-  const BusinessPage({super.key, this.id});
+  final String id;
+  const BusinessPage({super.key, required this.id});
 
   @override
   State<BusinessPage> createState() => _BusinessPageState();
@@ -22,7 +22,7 @@ class _BusinessPageState extends State<BusinessPage> {
   _BusinessPageState() {
     // TODO: en fonction de l'id qui est dans la Page => récupérer le bon json
     // Future
-    fetchDataById(widget.id!).then((data) => {
+    fetchDataById(widget.id).then((data) => {
           setState(() {
             myBusiness = data;
           })

@@ -45,50 +45,38 @@ class _CardsState extends State<Cards> {
         if (snapshot.hasData) {
           final data = snapshot.data as List<Business>;
           return Column(children: [
-            if (isMobile(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                child: SizedBox(
-                  height: 3410.0,
-                  child: ListView.builder(
-                    itemCount: 12,
-                    itemBuilder: (BuildContext context, int index) {
-                      return ListTile(
-                        title: Card1(item: data[index]),
-                      );
-                    },
-                  ),
-                ),
-              )
-            else if (isTablet(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: SizedBox(
-                    height: 2000.0,
-                    child: GridView.builder(
+            Padding(
+              padding: isMobile(context)
+                  ? const EdgeInsets.symmetric(horizontal: 24.0)
+                  : isTablet(context)
+                      ? const EdgeInsets.symmetric(horizontal: 40.0)
+                      : const EdgeInsets.symmetric(horizontal: 165.0),
+              child: SizedBox(
+                height: isMobile(context)
+                    ? 3410.0
+                    : isTablet(context)
+                        ? 2000.0
+                        : 1425.0,
+                child: isMobile(context)
+                    ? ListView.builder(
+                        itemCount: 12,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ListTile(
+                            title: Card1(item: data[index]),
+                          );
+                        },
+                      )
+                    : GridView.builder(
                         itemCount: data.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 11.0,
-                          childAspectRatio: (itemWidth / itemHeight),
+                          crossAxisCount: isTablet(context) ? 2 : 3,
+                          crossAxisSpacing: isTablet(context) ? 11.0 : 40.0,
+                          childAspectRatio: isTablet(context) ? (itemWidth / itemHeight) : 1,
                         ),
-                        itemBuilder: (context, index) => Card1(item: data[index]))),
-              )
-            else if (isDesktop(context))
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 165.0),
-                child: SizedBox(
-                  height: 1425.0,
-                  child: GridView.builder(
-                      itemCount: data.length,
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 3,
-                        crossAxisSpacing: 40.0,
-                        // childAspectRatio: (itemWidth / itemHeight),
+                        itemBuilder: (context, index) => Card1(item: data[index]),
                       ),
-                      itemBuilder: (context, index) => Card1(item: data[index])),
-                ),
               ),
+            ),
             Container(
               margin: const EdgeInsets.only(top: 32.0, bottom: 62.0),
               width: 142.0,
@@ -179,7 +167,13 @@ class Card1 extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            item.contract.toString(),
+                            item.contract == Contract.FREELANCE
+                                ? "Freelance"
+                                : item.contract == Contract.PART_TIME
+                                    ? "Part Time"
+                                    : item.contract == Contract.FULL_TIME
+                                        ? "Full Time"
+                                        : "",
                             style: _styleText,
                           )
                         ]),
@@ -224,7 +218,7 @@ class Card1 extends StatelessWidget {
             width: 50.0,
             height: 50.0,
             decoration: BoxDecoration(
-              color: const Color(0xffE99210),
+              color: Color(item.logoBackground),
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: SvgPicture.asset(
