@@ -4,11 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:devjobs/views/components/app_bar.dart';
+import '../components/app_bar.dart';
 import '../../model/json_model.dart';
+import '../hexcolor.dart';
 
 class BusinessPage extends StatefulWidget {
-  final String id;
+  final int id;
   const BusinessPage({super.key, required this.id});
 
   @override
@@ -16,20 +17,12 @@ class BusinessPage extends StatefulWidget {
 }
 
 class _BusinessPageState extends State<BusinessPage> {
-  Business? myBusiness;
-  get decoration => null;
-
-  _BusinessPageState() {
-    // TODO: en fonction de l'id qui est dans la Page => récupérer le bon json
-    // Future
-    fetchDataById(widget.id).then((data) => {
-          setState(() {
-            myBusiness = data;
-          })
-        });
+  @override
+  void initState() {
+    super.initState();
   }
 
-  Future<Business?> fetchDataById(String id) async {
+  Future<Business?> fetchDataById(int id) async {
     try {
       // Charger le fichier JSON depuis les actifs
       String jsonString = await rootBundle.loadString('assets/data.json');
@@ -39,7 +32,9 @@ class _BusinessPageState extends State<BusinessPage> {
 
       // Rechercher l'élément correspondant à l'ID donné
       Map<String, dynamic>? jsonData = jsonList.firstWhere(
-        (element) => element['id'] == id,
+        (element) {
+          return element['id'] == id;
+        },
         orElse: () => null,
       );
 
@@ -61,17 +56,25 @@ class _BusinessPageState extends State<BusinessPage> {
       backgroundColor: const Color(0xFFF4F6F8),
       body: ListView(children: [
         const appBar(),
-        myBusiness != null ? const CircularProgressIndicator() : Businesses(myBusiness!),
-        const Cta(),
+        FutureBuilder(
+          builder: (context, snapshot) {
+            if (snapshot.error != null) {
+              return Text(snapshot.error.toString());
+            }
+            return snapshot.data == null ? const CircularProgressIndicator() : Businesses(item: snapshot.data!);
+          },
+          future: fetchDataById(widget.id),
+        ),
+        // const Cta(),
       ]),
     );
   }
 }
 
 class Businesses extends StatelessWidget {
-  final Business myBusiness;
+  final Business item;
 
-  const Businesses(this.myBusiness, {super.key});
+  const Businesses({required this.item, super.key});
 
   final _styleText = const TextStyle(
     fontSize: 16.0,
@@ -93,57 +96,24 @@ class Businesses extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        if (isMobile(context))
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: Container(
-                width: double.infinity,
-                transform: Matrix4.translationValues(0.0, -40, 0.0),
-                child: Column(
-                  children: [
-                    BusinessCard(styleText: _styleText, styleText2: _styleText2),
-                    BusinessDescription(styleText: _styleText, styleText2: _styleText2),
-                  ],
-                ),
-              ),
-            ),
-          )
-        else if (isTablet(context))
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 40.0),
-              child: Container(
-                width: double.infinity,
-                transform: Matrix4.translationValues(0.0, -40, 0.0),
-                child: Column(
-                  children: [
-                    BusinessCard(styleText: _styleText, styleText2: _styleText2),
-                    BusinessDescription(styleText: _styleText, styleText2: _styleText2),
-                  ],
-                ),
-              ),
-            ),
-          )
-        else if (isDesktop(context))
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 355.0),
-              child: Container(
-                width: double.infinity,
-                transform: Matrix4.translationValues(0.0, -40, 0.0),
-                child: Column(
-                  children: [
-                    BusinessCard(styleText: _styleText, styleText2: _styleText2),
-                    BusinessDescription(styleText: _styleText, styleText2: _styleText2),
-                  ],
-                ),
-              ),
-            ),
-          )
-      ],
+    return Center(
+      child: Padding(
+        padding: isMobile(context)
+            ? const EdgeInsets.symmetric(horizontal: 24.0)
+            : isTablet(context)
+                ? const EdgeInsets.symmetric(horizontal: 40.0)
+                : const EdgeInsets.symmetric(horizontal: 355.0),
+        child: Container(
+          width: double.infinity,
+          transform: Matrix4.translationValues(0.0, -40, 0.0),
+          child: Column(
+            children: [
+              BusinessCard(item, styleText: _styleText, styleText2: _styleText2),
+              BusinessDescription(item, styleText: _styleText, styleText2: _styleText2),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
@@ -183,258 +153,175 @@ class Cta extends StatelessWidget {
   }
 }
 
-class BusinessDescription extends StatefulWidget {
-  const BusinessDescription({
+class BusinessDescription extends StatelessWidget {
+  final Business item;
+  final TextStyle _styleText;
+  final TextStyle _styleText2;
+
+  const BusinessDescription(
+    this.item, {
     super.key,
     required TextStyle styleText,
     required TextStyle styleText2,
   })  : _styleText = styleText,
         _styleText2 = styleText2;
 
-  final TextStyle _styleText;
-  final TextStyle _styleText2;
-
-  @override
-  State<BusinessDescription> createState() => _BusinessDescriptionState();
-}
-
-class _BusinessDescriptionState extends State<BusinessDescription> {
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(6.0),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 24.0),
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(children: [
-                    Text('1w ago', style: widget._styleText),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                      child: Text('•', style: widget._styleText),
-                    ),
-                    Text('PartTime', style: widget._styleText),
-                  ]),
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(6.0),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 24.0),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(children: [
+                  Text(item.postedAt, style: _styleText),
                   Padding(
-                    padding: const EdgeInsets.only(top: 4.0, bottom: 6.0),
-                    child: Text('Software Software Engineer', style: widget._styleText2),
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: Text('•', style: _styleText),
                   ),
-                  const Text(
-                    'United Kingdom',
-                    style: TextStyle(
-                      color: Color(0xFF5964E0), // set the text color
-                      fontSize: 14.0, // set the font size
-                      fontWeight: FontWeight.bold, //
+                  Text(
+                      item.contract == Contract.FREELANCE
+                          ? "Freelance"
+                          : item.contract == Contract.PART_TIME
+                              ? "Part Time"
+                              : item.contract == Contract.FULL_TIME
+                                  ? "Full Time"
+                                  : "",
+                      style: _styleText),
+                ]),
+                Padding(
+                  padding: const EdgeInsets.only(top: 4.0, bottom: 6.0),
+                  child: Text(item.position, style: _styleText2),
+                ),
+                Text(
+                  item.location,
+                  style: const TextStyle(
+                    color: Color(0xFF5964E0), // set the text color
+                    fontSize: 14.0, // set the font size
+                    fontWeight: FontWeight.bold, //
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 50.0),
+              child: Container(
+                  width: double.infinity,
+                  height: 48.0,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF5964E0),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'Apply Now',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: "Kumbh Sans",
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w700,
+                      ),
                     ),
-                  ),
-                ],
+                  )),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: Text(item.description, style: _styleText),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 66.0),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text("Requirements", style: _styleText2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 28.0),
+                  child: Text(item.requirements.content, style: _styleText),
+                )
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: ListView.builder(
+                itemCount: item.requirements.items.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text("•",
+                          style: TextStyle(
+                            color: Color(0xFF5964E0),
+                          )),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 32.0),
+                          child: Text(item.requirements.items[index], style: _styleText),
+                        ),
+                      )
+                    ],
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 50.0),
-                child: Container(
-                    width: double.infinity,
-                    height: 48.0,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFF5964E0),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        'Apply Now',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontFamily: "Kumbh Sans",
-                          fontSize: 16.0,
-                          fontWeight: FontWeight.w700,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 66.0),
+              child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                Text("What You Will Do", style: _styleText2),
+                Padding(
+                  padding: const EdgeInsets.only(top: 28.0),
+                  child: Text(item.role.content, style: _styleText),
+                )
+              ]),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 32.0),
+              child: ListView.builder(
+                itemCount: item.role.items.length,
+                itemBuilder: (context, index) {
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        index.toString(),
+                        style: const TextStyle(
+                          color: Color(0xFF5964E0),
                         ),
                       ),
-                    )),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 32.0),
+                          child: Text(item.role.items[index], style: _styleText),
+                        ),
+                      )
+                    ],
+                  );
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: Text(
-                    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Phasellus hendrerit. Pellentesque aliquet nibh nec urna. In nisi neque, aliquet vel, dapibus id, mattis vel, nisi. Sed pretium, ligula sollicitudin laoreet viverra, tortor libero sodales leo, eget blandit nunc tortor eu nibh. Nullam mollis. Ut justo. Suspendisse potenti. Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.",
-                    style: widget._styleText),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 66.0),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text("Requirements", style: widget._styleText2),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 28.0),
-                    child: Text("Morbi interdum mollis sapien. Sed ac risus. Phasellus lacinia, magna a ullamcorper laoreet, lectus arcu pulvinar risus, vitae facilisis libero dolor a purus. Sed vel lacus. Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus. Nunc tellus ante, mattis eget, gravida vitae, ultricies ac, leo. Integer leo pede, ornare a, lacinia eu, vulputate vel, nisl.", style: widget._styleText),
-                  )
-                ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("•",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Morbi interdum mollis sapien. Sed", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("•",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Phasellus lacinia magna a ullamcorper laoreet, lectus arcu pulvinar risus", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("•",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus.", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("•",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Morbi interdum mollis sapien. Sed", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 66.0),
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Text("What You Will Do", style: widget._styleText2),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 28.0),
-                    child: Text("Sed egestas, ante et vulputate volutpat, eros pede semper est, vitae luctus metus libero eu augue. Morbi purus libero, faucibus adipiscing, commodo quis, gravida id, est. Sed lectus. Praesent elementum hendrerit tortor. Sed semper lorem at felis. Vestibulum volutpat, lacus a ultrices sagittis, mi neque euismod dui, eu pulvinar nunc sapien ornare nisl. Phasellus pede arcu, dapibus eu, fermentum et, dapibus sed, urna.", style: widget._styleText),
-                  )
-                ]),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32.0),
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("1",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Morbi interdum mollis sapien. Sed", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("2",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Phasellus lacinia magna a ullamcorper laoreet, lectus arcu pulvinar risus", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("3",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Mauris nibh felis, adipiscing varius, adipiscing in, lacinia vel, tellus. Suspendisse ac urna. Etiam pellentesque mauris ut lectus.", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("4",
-                            style: TextStyle(
-                              color: Color(0xFF5964E0),
-                            )),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(left: 32.0),
-                            child: Text("Morbi interdum mollis sapien. Sed", style: widget._styleText),
-                          ),
-                        )
-                      ],
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-    ]);
+    );
   }
 }
 
 class BusinessCard extends StatelessWidget {
-  const BusinessCard({
+  final Business item;
+  final TextStyle _styleText;
+  final TextStyle _styleText2;
+
+  const BusinessCard(
+    this.item, {
     super.key,
     required TextStyle styleText,
     required TextStyle styleText2,
   })  : _styleText = styleText,
         _styleText2 = styleText2;
-
-  final TextStyle _styleText;
-  final TextStyle _styleText2;
 
   bool isTabletOrDesktop(BuildContext context) => MediaQuery.of(context).size.width > 820;
   @override
@@ -462,11 +349,11 @@ class BusinessCard extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              "Scoot",
+                              item.company,
                               style: _styleText2,
                             ),
                             Text(
-                              "scoot.com",
+                              item.website,
                               style: _styleText,
                             ),
                           ],
@@ -483,8 +370,8 @@ class BusinessCard extends StatelessWidget {
                                 // Action to perform when the button is pressed
                               },
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFFEEEFFC),
-                                primary: Color(0xFF5964E0),
+                                backgroundColor: const Color(0xFFEEEFFC),
+                                primary: const Color(0xFF5964E0),
                                 elevation: 0,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0),
@@ -507,11 +394,11 @@ class BusinessCard extends StatelessWidget {
                 child: Container(
                   width: 140.0,
                   height: 140.0,
-                  decoration: const BoxDecoration(
-                    color: Color(0xffE99210),
+                  decoration: BoxDecoration(
+                    color: HexColor.fromHex(item.logoBackground),
                   ),
                   child: SvgPicture.asset(
-                    "assets/logos/scoot.svg",
+                    item.logo,
                     width: 80.0,
                     fit: BoxFit.none,
                   ),
@@ -545,12 +432,12 @@ class BusinessCard extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(top: 49.0, bottom: 8.0),
                                   child: Text(
-                                    "Scoot",
+                                    item.company,
                                     style: _styleText2,
                                   ),
                                 ),
                                 Text(
-                                  "scoot.com",
+                                  item.website,
                                   style: _styleText,
                                 ),
                               ],
@@ -569,7 +456,7 @@ class BusinessCard extends StatelessWidget {
                                   },
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xFFEEEFFC),
-                                    primary: Color(0xFF5964E0),
+                                    primary: const Color(0xFF5964E0),
                                     elevation: 0,
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(5.0),
@@ -589,11 +476,11 @@ class BusinessCard extends StatelessWidget {
                   width: 50.0,
                   height: 50.0,
                   decoration: BoxDecoration(
-                    color: const Color(0xffE99210),
+                    color: HexColor.fromHex(item.logoBackground),
                     borderRadius: BorderRadius.circular(15.0),
                   ),
                   child: SvgPicture.asset(
-                    "assets/logos/scoot.svg",
+                    item.logo,
                     width: 40.0,
                     fit: BoxFit.scaleDown,
                   ),

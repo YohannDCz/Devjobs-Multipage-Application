@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:devjobs/model/json_model.dart';
-
+import '../widgets/business.dart';
+import '../hexcolor.dart';
 class Brands extends StatelessWidget {
   const Brands({super.key});
 
@@ -14,23 +15,6 @@ class Brands extends StatelessWidget {
       ),
     );
   }
-}
-
-extension HexColor on Color {
-  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
-  static Color fromHex(String hexString) {
-    final buffer = StringBuffer();
-    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
-    buffer.write(hexString.replaceFirst('#', ''));
-    return Color(int.parse(buffer.toString(), radix: 16));
-  }
-
-  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
 }
 
 class Cards extends StatefulWidget {
@@ -162,104 +146,112 @@ class Card1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(item.logoBackground);
-    return Stack(
-      children: [
-        SizedBox(
-          height: 276.0,
-          width: double.infinity,
-          child: Padding(
-            padding: const EdgeInsets.only(top: 49.0),
-            child: Container(
-              width: 327.0,
-              height: 228.0,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(6.0),
-              ),
-              child: Stack(
-                children: [
-                  Positioned(
-                    top: 49.0,
-                    left: 32.0,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(children: [
-                          Text(
-                            item.postedAt,
-                            style: _styleText,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 4.0),
-                            child: Text(
-                              "•",
+    return GestureDetector(
+      onTap: () {
+
+   Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => BusinessPage(id: item.id)),
+        );
+      },
+      child: Stack(
+        children: [
+          SizedBox(
+            height: 276.0,
+            width: double.infinity,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 49.0),
+              child: Container(
+                width: 327.0,
+                height: 228.0,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(6.0),
+                ),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      top: 49.0,
+                      left: 32.0,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(children: [
+                            Text(
+                              item.postedAt,
                               style: _styleText,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                              child: Text(
+                                "•",
+                                style: _styleText,
+                              ),
+                            ),
+                            Text(
+                              item.contract == Contract.FREELANCE
+                                  ? "Freelance"
+                                  : item.contract == Contract.PART_TIME
+                                      ? "Part Time"
+                                      : item.contract == Contract.FULL_TIME
+                                          ? "Full Time"
+                                          : "",
+                              style: _styleText,
+                            )
+                          ]),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 12.0),
+                            child: Text(
+                              item.position,
+                              style: _styleText2,
                             ),
                           ),
                           Text(
-                            item.contract == Contract.FREELANCE
-                                ? "Freelance"
-                                : item.contract == Contract.PART_TIME
-                                    ? "Part Time"
-                                    : item.contract == Contract.FULL_TIME
-                                        ? "Full Time"
-                                        : "",
+                            item.company,
                             style: _styleText,
-                          )
-                        ]),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 12.0),
-                          child: Text(
-                            item.position,
-                            style: _styleText2,
                           ),
-                        ),
-                        Text(
-                          item.company,
-                          style: _styleText,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // ignore: prefer_const_constructors
-                  Positioned(
-                    bottom: 36.0,
-                    left: 32.0,
-                    // ignore: prefer_const_constructors
-                    child: Text(
-                      item.location,
-                      // ignore: prefer_const_constructors
-                      style: TextStyle(
-                        color: const Color(0xFF5964E0), // set the text color
-                        fontSize: 14.0, // set the font size
-                        fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
+                        ],
                       ),
                     ),
-                  )
-                ],
+                    // ignore: prefer_const_constructors
+                    Positioned(
+                      bottom: 36.0,
+                      left: 32.0,
+                      // ignore: prefer_const_constructors
+                      child: Text(
+                        item.location,
+                        // ignore: prefer_const_constructors
+                        style: TextStyle(
+                          color: const Color(0xFF5964E0), // set the text color
+                          fontSize: 14.0, // set the font size
+                          fontWeight: FontWeight.bold, // set the font weight // set the font style/ set the letter spacing// set the word spacing// set the text decoration // set the text decoration color // set the text decoration style
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 32.0,
-          left: 32.0,
-          child: Container(
-            width: 50.0,
-            height: 50.0,
-            decoration: BoxDecoration(
-              color: HexColor.fromHex(item.logoBackground),
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            child: SvgPicture.asset(
-              item.logo,
-              width: 40.0,
-              fit: BoxFit.scaleDown,
+          Positioned(
+            top: 32.0,
+            left: 32.0,
+            child: Container(
+              width: 50.0,
+              height: 50.0,
+              decoration: BoxDecoration(
+                color: HexColor.fromHex(item.logoBackground),
+                borderRadius: BorderRadius.circular(15.0),
+              ),
+              child: SvgPicture.asset(
+                item.logo,
+                width: 40.0,
+                fit: BoxFit.scaleDown,
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
