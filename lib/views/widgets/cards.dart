@@ -16,6 +16,23 @@ class Brands extends StatelessWidget {
   }
 }
 
+extension HexColor on Color {
+  /// String is in the format "aabbcc" or "ffaabbcc" with an optional leading "#".
+  static Color fromHex(String hexString) {
+    final buffer = StringBuffer();
+    if (hexString.length == 6 || hexString.length == 7) buffer.write('ff');
+    buffer.write(hexString.replaceFirst('#', ''));
+    return Color(int.parse(buffer.toString(), radix: 16));
+  }
+
+  /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
+  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+      '${alpha.toRadixString(16).padLeft(2, '0')}'
+      '${red.toRadixString(16).padLeft(2, '0')}'
+      '${green.toRadixString(16).padLeft(2, '0')}'
+      '${blue.toRadixString(16).padLeft(2, '0')}';
+}
+
 class Cards extends StatefulWidget {
   const Cards({super.key});
 
@@ -24,14 +41,17 @@ class Cards extends StatefulWidget {
 }
 
 class _CardsState extends State<Cards> {
-  bool open = false;
+  bool isOpen = false;
 
-  // void openContainer() {
-  //   setState(open = !open);
-  // }
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
   bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
   bool isDesktop(BuildContext context) => MediaQuery.of(context).size.width > 1220;
+
+  void openContainer() {
+    setState(() {
+      isOpen = !isOpen;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +73,21 @@ class _CardsState extends State<Cards> {
                       : const EdgeInsets.symmetric(horizontal: 165.0),
               child: SizedBox(
                 height: isMobile(context)
-                    ? 3410.0
+                    ? isOpen
+                        ? 3500
+                        : 2960
                     : isTablet(context)
-                        ? 2000.0
-                        : 1425.0,
+                        ? isOpen
+                            ? 2100
+                            : 1550
+                        : isDesktop(context)
+                            ? isOpen
+                                ? 1730
+                                : 1340
+                            : 1340,
                 child: isMobile(context)
                     ? ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: 12,
                         itemBuilder: (BuildContext context, int index) {
                           return ListTile(
@@ -67,6 +96,7 @@ class _CardsState extends State<Cards> {
                         },
                       )
                     : GridView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: data.length,
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: isTablet(context) ? 2 : 3,
@@ -82,7 +112,7 @@ class _CardsState extends State<Cards> {
               width: 142.0,
               height: 48.0,
               child: ElevatedButton(
-                  onPressed: () => {},
+                  onPressed: openContainer,
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all<Color>(const Color(0xFF5964E0)),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -132,6 +162,7 @@ class Card1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(item.logoBackground);
     return Stack(
       children: [
         SizedBox(
@@ -218,7 +249,7 @@ class Card1 extends StatelessWidget {
             width: 50.0,
             height: 50.0,
             decoration: BoxDecoration(
-              color: Color(item.logoBackground),
+              color: HexColor.fromHex(item.logoBackground),
               borderRadius: BorderRadius.circular(15.0),
             ),
             child: SvgPicture.asset(
