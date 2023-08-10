@@ -1,8 +1,7 @@
-import 'package:devjobs/views/components/input.dart';
-import 'package:devjobs/views/widgets/business.dart';
+import 'package:devjobs/views/input/input.dart';
 import 'package:flutter/material.dart';
-import 'package:devjobs/views/components/app_bar.dart';
-import 'package:devjobs/views/widgets/cards.dart';
+import 'package:devjobs/views/appbar/app_bar.dart';
+import 'package:devjobs/views/cards/cards.dart';
 
 void main() async {
   runApp(const MyApp());
@@ -38,7 +37,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: ListView(children: const [
         appBar(),
         Input(),
-        Brands(),
+        Cards(),
       ]),
     );
   }

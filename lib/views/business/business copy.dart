@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../components/app_bar.dart';
+import '../appbar/app_bar.dart';
 import '../../model/json_model.dart';
 import '../hexcolor.dart';
 
@@ -245,27 +245,29 @@ class BusinessDescription extends StatelessWidget {
                 )
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: ListView.builder(
-                itemCount: item.requirements.items.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("•",
-                          style: TextStyle(
-                            color: Color(0xFF5964E0),
-                          )),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
-                          child: Text(item.requirements.items[index], style: _styleText),
-                        ),
-                      )
-                    ],
-                  );
-                },
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 32.0),
+                child: ListView.builder(
+                  itemCount: item.requirements.items.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text("•",
+                            style: TextStyle(
+                              color: Color(0xFF5964E0),
+                            )),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Text(item.requirements.items[index], style: _styleText),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
             Padding(
@@ -278,29 +280,31 @@ class BusinessDescription extends StatelessWidget {
                 )
               ]),
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 32.0),
-              child: ListView.builder(
-                itemCount: item.role.items.length,
-                itemBuilder: (context, index) {
-                  return Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        index.toString(),
-                        style: const TextStyle(
-                          color: Color(0xFF5964E0),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.only(top: 32.0),
+                child: ListView.builder(
+                  itemCount: item.role.items.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          index.toString(),
+                          style: const TextStyle(
+                            color: Color(0xFF5964E0),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.only(left: 32.0),
-                          child: Text(item.role.items[index], style: _styleText),
-                        ),
-                      )
-                    ],
-                  );
-                },
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(left: 32.0),
+                            child: Text(item.role.items[index], style: _styleText),
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                ),
               ),
             ),
           ],
