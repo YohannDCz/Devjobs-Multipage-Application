@@ -6,16 +6,24 @@ import 'package:devjobs/views/input/input.dart';
 import 'logoswitch.dart';
 
 class Appbar extends StatelessWidget {
-  const Appbar({super.key});
+  const Appbar({
+    super.key,
+    required this.search,
+  });
+
+  final void Function(String) search;
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: const [
+    return Column(children: [
       appBar(),
-      Input(),
+      Input(
+        search: search,
+      ),
     ]);
   }
 }
+
 // ignore: camel_case_types
 class appBar extends StatelessWidget {
   const appBar({
@@ -87,9 +95,9 @@ class appBar extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(100.0)), // set border radius here
                   child: SvgPicture.asset(
-                      'assets/mobile/bg-pattern-header.svg',
-                      fit: BoxFit.fitWidth,
-                    ),
+                    'assets/mobile/bg-pattern-header.svg',
+                    fit: BoxFit.fitWidth,
+                  ),
                 ),
               ),
               Container(
@@ -102,7 +110,3 @@ class appBar extends StatelessWidget {
     );
   }
 }
-
-
-
-

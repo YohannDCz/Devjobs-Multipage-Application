@@ -4,7 +4,10 @@ import 'package:flutter_svg/svg.dart';
 class ShortInputContent extends StatelessWidget {
   const ShortInputContent({
     super.key,
+    required this.search,
   });
+
+  final void Function(String) search;
 
   @override
   Widget build(BuildContext context) {
@@ -16,8 +19,13 @@ class ShortInputContent extends StatelessWidget {
             borderRadius: BorderRadius.circular(6.0),
             color: Colors.white,
           ),
-          child: const TextField(
-            decoration: InputDecoration(hintText: 'Filter by title...', contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0), border: InputBorder.none),
+          child: TextField(
+            onChanged: search,
+            decoration: const InputDecoration(
+              hintText: 'Filter by title...',
+              contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 24.0),
+              border: InputBorder.none,
+            ),
           ),
         ),
         Positioned(

@@ -4,7 +4,10 @@ import 'package:flutter_svg/svg.dart';
 class SearchLeft extends StatelessWidget {
   const SearchLeft({
     super.key,
+    required this.search
   });
+
+  final void Function(String) search;
 
   @override
   Widget build(BuildContext context) {
@@ -24,10 +27,24 @@ class SearchLeft extends StatelessWidget {
               top: 28.0,
               left: 24.0,
               // ignore: deprecated_member_use
-              child: SvgPicture.asset(fit: BoxFit.contain, 'assets/desktop/icon-search.svg', width: 24.0, height: 24.0, color: const Color(0xff5964E0)),
+              child: SvgPicture.asset(
+                fit: BoxFit.contain,
+                'assets/desktop/icon-search.svg',
+                width: 24.0,
+                height: 24.0,
+                color: const Color(0xff5964E0),
+              ),
             ),
-            const TextField(
-              decoration: InputDecoration(hintText: 'Filter by title...', contentPadding: EdgeInsets.symmetric(vertical: 32.0, horizontal: 64.0), border: InputBorder.none),
+            TextField(
+              onChanged: search,
+              decoration: const InputDecoration(
+                hintText: 'Filter by title...',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: 32.0,
+                  horizontal: 64.0,
+                ),
+                border: InputBorder.none,
+              ),
             ),
           ],
         ),

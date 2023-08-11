@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'dart:async' show Future;
-import 'package:flutter/material.dart';
 
 // To parse this JSON data, do
 //
@@ -11,15 +10,6 @@ Future<List<Business>> fetchData() async {
   String jsonString = await rootBundle.loadString('assets/data.json');
   List<Business> dataList = dataFromJson(jsonString);
   return dataList;
-}
-
-Future<void> printable() async {
-  List<Business> data = await fetchData();
-
-  debugPrint('ID: ${data[0].id}');
-  debugPrint('Company: ${data[0].company}');
-  debugPrint('Logo: ${data[0].logo}');
-  // print other properties as needed
 }
 
 // To parse this JSON data, do

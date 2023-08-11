@@ -6,7 +6,10 @@ import 'longinput.dart';
 class Input extends StatelessWidget {
   const Input({
     super.key,
+    required this.search,
   });
+
+  final void Function(String) search;
 
   bool isMobile(BuildContext context) => MediaQuery.of(context).size.width <= 820;
   bool isTablet(BuildContext context) => MediaQuery.of(context).size.width > 820 && MediaQuery.of(context).size.width <= 1220;
@@ -20,19 +23,25 @@ class Input extends StatelessWidget {
         child: Column(
           children: [
             if (isMobile(context))
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 24),
-                child: ShortInputContent(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: ShortInputContent(
+                  search: search,
+                ),
               ),
             if (isTablet(context))
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40),
-                child: LongInputContent(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40),
+                child: LongInputContent(
+                  search: search,
+                ),
               ),
             if (isDesktop(context))
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 165),
-                child: LongInputContent(),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 165),
+                child: LongInputContent(
+                  search: search,
+                ),
               ),
           ],
         ),

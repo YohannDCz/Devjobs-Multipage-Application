@@ -31,9 +31,7 @@ class _BusinessPageState extends State<BusinessPage> {
 
       // Rechercher l'élément correspondant à l'ID donné
       Map<String, dynamic>? jsonData = jsonList.firstWhere(
-        (element) {
-          return element['id'] == id;
-        },
+        (element) => element['id'] == id,
         orElse: () => null,
       );
 
